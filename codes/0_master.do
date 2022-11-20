@@ -46,10 +46,10 @@
 *** 0.1 Setting up users	
 	if ("`c(username)'" == "ifyou") {
 		// Absoluto
-		global project 				"D:/Documents/RA Jobs/LAMBDA/Econometrica Aplicada"
+		global project 				"C:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada"
 	}
 	
-	if ("`c(username)'" == "USERNAME") {
+  else if ("`c(username)'" == "USERNAME") {
 		global project 				""
 	}
 	

@@ -1,15 +1,15 @@
 # Fdb version 3
-["xdvipdfmx"] 1668973918 "01-RCT.xdv" "01-RCT.pdf" "01-RCT" 1668973919
-  "01-RCT.xdv" 1668973918 2717856 5f19648f6c74b1320ce7c329a7f9851a "xelatex"
+["xdvipdfmx"] 1668987726 "01-RCT.xdv" "01-RCT.pdf" "01-RCT" 1668987728
+  "01-RCT.xdv" 1668987726 2717636 ef05076b50009f47ab1d0f7d5b398968 "xelatex"
   (generated)
   "01-RCT.pdf"
-["xelatex"] 1668973910 "c:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/lectures/01-RCT/01-RCT.tex" "01-RCT.xdv" "01-RCT" 1668973919
-  "01-RCT.aux" 1668973918 15216 c5130a8dd0b77cdd215bdd96b8d833d0 "xelatex"
-  "01-RCT.nav" 1668973918 8571 0e49b58d970945aec80baae5f6ed727f "xelatex"
-  "01-RCT.out" 1668973918 1890 bbf5ddc8d7db3359209c196e93df63ab "xelatex"
-  "01-RCT.tex" 1668973905 39246 b6780887f4fe782a3f341c460927f367 ""
-  "01-RCT.vrb" 1668973917 858 a25e661fc398b2af3896da0660a9b3e1 "xelatex"
-  "c:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/lectures/01-RCT/01-RCT.tex" 1668973905 39246 b6780887f4fe782a3f341c460927f367 ""
+["xelatex"] 1668987715 "c:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/lectures/01-RCT/01-RCT.tex" "01-RCT.xdv" "01-RCT" 1668987728
+  "01-RCT.aux" 1668987726 15216 c5130a8dd0b77cdd215bdd96b8d833d0 "xelatex"
+  "01-RCT.nav" 1668987726 8571 0e49b58d970945aec80baae5f6ed727f "xelatex"
+  "01-RCT.out" 1668987726 1890 bbf5ddc8d7db3359209c196e93df63ab "xelatex"
+  "01-RCT.tex" 1668987714 39234 dc55f165269f1973b267812cac95fc14 ""
+  "01-RCT.vrb" 1668987725 858 a25e661fc398b2af3896da0660a9b3e1 "xelatex"
+  "c:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/lectures/01-RCT/01-RCT.tex" 1668987714 39234 dc55f165269f1973b267812cac95fc14 ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1666419996 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1666425602 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1666417270 1004 54797486969f23fa377b128694d548df ""

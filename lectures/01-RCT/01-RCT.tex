@@ -287,7 +287,7 @@ Y_i = \alpha + \beta D_{i} + \epsilon_i
 \begin{frame}{RCT cont.}
 	La asignación aleatoria resuelve el problema del sesgo de selección: 
 	\begin{itemize}
-		\item $Y_{0i}, Y_{1i}$ are independent of $D_i$; 
+		\item $Y_{0i}, Y_{1i}$ son independientes de $D_i$; 
 		\item En este contexto, tenemos que enfocarnos directamente en la asignación de $D_i$.
 	\end{itemize}
 \end{frame}
@@ -466,7 +466,7 @@ Y_i = \alpha + \beta D_{i} + \epsilon_i
 	\begin{itemize}
 		\item Para tener una idea de la magnitud de los \textit{derrames} de información, se puede comparar:
 		\begin{itemize}
-			\item las puntuaciones de las pruebas de los amigos del grupo de tratamiento en el grupo de control, \textit{con}
+			\item las puntuaciones de las pruebas de los amigos del grupo de tratamiento en el grupo de control.
 			\item las puntuaciones de las pruebas de los amigos del grupo de control en el grupo de control.
 		\end{itemize}
 	\end{itemize}
@@ -608,7 +608,7 @@ Y_i = \alpha + \beta D_{i} + \epsilon_i
 %------------------------------------------------
 \begin{frame}{Incumplimiento}
   
-  A menudo (aunque no siempre) proporcionará un límite inferior en el ATE, ya que incluye en el grupo de tratamiento a algunas personas que no recibieron el tratamiento (bajo el supuesto de que se habrían beneficiado menos del tratamiento que aquellos que lo aceptaron). ) y puede incluir en el grupo de comparación a algunas personas que de hecho recibieron el tratamiento.
+  A menudo (aunque no siempre) proporcionará un límite inferior en el ATE, ya que incluye en el grupo de tratamiento a algunas personas que no recibieron el tratamiento (bajo el supuesto de que se habrían beneficiado menos del tratamiento que aquellos que lo aceptaron), y puede incluir en el grupo de comparación a algunas personas que de hecho recibieron el tratamiento.
   
 \end{frame}
 %------------------------------------------------
@@ -633,7 +633,7 @@ Y_i = \alpha + \beta D_{i} + \epsilon_i
 %------------------------------------------------
 \begin{frame}{Clustering y errores estándar robustos}
 
-  Independientemente de su procedimiento de muestreo o asignación, generalmente se recomienda utilizar siempre errores estándar robustos a la heterocedasticidad en su especificación de regresión (White (1980), Angrist \& Pischke (2009) y Wooldridge (2013).
+  Independientemente de su procedimiento de muestreo o asignación, generalmente se recomienda utilizar siempre errores estándar robustos a la heterocedasticidad en su especificación de regresión: White (1980), Angrist \& Pischke (2009) y Wooldridge (2013).
 
   Según lo aconsejado por Abadie et al. (2017) y resumido por David McKenzie, hay dos razones por las que desearía agrupar sus errores estándar:
   

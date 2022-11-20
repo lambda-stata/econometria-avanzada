@@ -42,7 +42,7 @@
 		matrix m1[2,4] = m1[2,2] - m1[2,3]
 		matrix m1[2,5] = m1[2,2] + m1[2,3]
 		 		
-		// Sprin 2008 Survey (Row 1 - Col 5/9)
+		// Spring 2008 Survey (Row 1 - Col 5/9)
 		sum s08_hh_observed if s08_hh_covered == 1 & treatment == 1
 		matrix m1[2, 6] = `r(N)'
 		matrix m1[4, 6] = round(`r(mean)', .001) 	// Percent (Row 3)
@@ -76,7 +76,7 @@
 		matrix m1[3,9] = m1[3,6] + m1[3,7]	
 		
 	//	Percent of households surveyed (Col 3 and 4)
-		reg f07_hh_observed treatment if f07_hh_covered == 1, cluster(clustercode)
+		reg f07_hh_observed treatment if f07_hh_covered == 1, cluster(clustercode) 
 		matrix m1[4,4] = round(_b[treatment], .001)
 		matrix m1[5,4] = round(_se[treatment], .001)
 			
@@ -152,10 +152,10 @@
 	
 	//	Variables Column 1
 	replace c1 = "Panel A. Households surveyed" if _n == 1
-	replace c1 = "Identified" 					if _n == 2
-	replace c1 = "Surveyed" 					if _n == 3 
-	replace c1 = "Percent of households" 		if _n == 4
-	replace c1 = "surveyed" 					if _n == 5
+	replace c1 = "Identified" 					        if _n == 2
+	replace c1 = "Surveyed" 					          if _n == 3 
+	replace c1 = "Percent of households" 		    if _n == 4
+	replace c1 = "surveyed" 					          if _n == 5
 	
 	replace c1 = "Panel B. Households with eligible children" if _n == 6
 	replace c1 = "Households with children" 	if _n == 7
