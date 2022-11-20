@@ -17,7 +17,7 @@
 \usepackage{listings}
 \newcommand\setItemnumber[1]{\setcounter{enumi}{\numexpr#1-1\relax}}
 \usepackage[utf8]{inputenc}
-\usepackage [autostyle, english = american]{csquotes}
+\usepackage[autostyle, english = american]{csquotes}
 \MakeOuterQuote{"}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
@@ -26,7 +26,7 @@
 \usepackage[flushleft]{threeparttable}	% 3 part table 
 \usepackage[justification=centering]{caption}
 \captionsetup{skip=0pt}
-\graphicspath{{./fig/}}
+\graphicspath{{C:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/lectures/01-RCT/fig}}
 
 \makeatletter
 \let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
@@ -42,6 +42,10 @@
 \beamer@compresstrue
 \makeatother
 
+%% Fonts
+\usepackage{fontawesome}
+\setfontfamily{\FA}{[FontAwesome.otf]}
+
 %==============================================================
 % Title Page
 %==============================================================
@@ -49,7 +53,7 @@
 \title{Introducción a RCT}
 \author{Rony Rodrigo Maximiliano Rodriguez-Ramirez} 
 \institute{maximiliano.rod.ra@gmail.com \\ DECRG | The World Bank}
-\titlegraphic{\hfill\includegraphics[height=1.5cm]{dime}}
+\titlegraphic{\hfill\includegraphics[height=1.5cm]{fig/dime.png}}
 \date{\today}
 %==============================================================
 \begin{document}
@@ -62,6 +66,24 @@
 %\tableofcontents[hideallsubsections]
 %\end{frame}
 %------------------------------------------------
+
+\begin{frame}[t]{Clean-up, Introducción}
+
+Mi persona:
+\begin{itemize}
+  \item Mi nombre: Rony Rodrigo Maximilian Rodriguez Ramirez
+  \item Mis cursos: R for Stata users, Stata Avanzado, Econometría Avanzada.
+  \item Ubicación: Washington DC, The World Bank
+  \item Projectos Actuales: Contraceptives in Cameroon (con Berk Özler y Susan Athey), Ukraine Tutoring Programs (Lelys Dinarte).
+\end{itemize}
+
+Datos sobre este curso:
+\begin{itemize}
+  \item \href{https://github.com/lambda-stata/econometria-avanzada}{Repositorio GitHub de este curso} \, \faGithub 
+  \item Tipo de sessión: 45-50 minutes, 10 minutes descanso. De 3pm a 7pm Hora Perú.
+\end{itemize}
+
+\end{frame}
 
 %------------------------------------------------
 \section{Inferencia causal}
@@ -144,6 +166,7 @@ Por lo tanto, \textit{impacto} es definido como la comparación entre:
 \end{tikzpicture}
 \end{center}
 \end{frame}
+
 %------------------------------------------------
 \begin{frame}{¿Cuál es el impacto?}
 \begin{center}
@@ -210,22 +233,21 @@ El \textit{contrafactual} representa el estado del mundo que los participantes d
 \end{frame}
 %------------------------------------------------
 \begin{frame}{Un ejemplo}
-\begin{table}[H]
-\centering 
-\begin{threeparttable}
-\centering 
-\caption{Resultados y tratamientos para Inayat y Abdul}
-\small 
-\begin{tabular}{l c c} \hline \hline 
-													&LATIF, Abdul 	& ULLAH, Inayat \\ \hline
-Resultado potencial sin sesión de TA: $ Y_{0i} $	& 90	& 94  	\\
-Resultado potencial con la sesión de TA: $ Y_{1i}$ 	& 95	& 94  	\\
-Tratamiento (sesión de TA elegida):$ D_i $			& 1		& 0 	\\
-Resultado real de la clase: $ Y_{i} $				& 95	& 94   	\\ 
-Efecto del tratamiento: $ Y_{1i} - Y_{0i} $			& 5		& 0  	\\ \hline 
-\end{tabular}
-\end{threeparttable}
-\end{table}
+  \begin{table}[H]
+  \centering 
+    \begin{threeparttable}
+    \caption{Resultados y tratamientos para Inayat y Abdul}
+    \small 
+    \begin{tabular}{l c c} \hline \hline 
+                              &LATIF, Abdul 	& ULLAH, Inayat \\ \hline
+    Resultado potencial sin sesión de TA: $ Y_{0i} $	& 90	& 94  	\\
+    Resultado potencial con la sesión de TA: $ Y_{1i}$ 	& 95	& 94  	\\
+    Tratamiento (sesión de TA elegida):$ D_i $			& 1		& 0 	\\
+    Resultado real de la clase: $ Y_{i} $				& 95	& 94   	\\ 
+    Efecto del tratamiento: $ Y_{1i} - Y_{0i} $			& 5		& 0  	\\ \hline 
+    \end{tabular}
+    \end{threeparttable}
+  \end{table}
 \end{frame}
 %------------------------------------------------
 \begin{frame}{Un ejemplo}
@@ -705,7 +727,7 @@ Y_i = \alpha + \beta D_{i} + \epsilon_i
 	\begin{center}
 	\LARGE STATA TIME
 		\begin{center}
-		\includegraphics[width=0.57\textwidth]{fig1.pdf}
+		\includegraphics[width=0.57\textwidth]{fig/fig1.pdf}
 		\end{center}
 	\end{center}
 \end{frame}

@@ -1,15 +1,15 @@
 # Fdb version 3
-["xdvipdfmx"] 1668971768 "01-RCT.xdv" "01-RCT.pdf" "01-RCT" 1668971770
-  "01-RCT.xdv" 1668971768 2667508 5049d1b22ef3779ee66284b42f827932 "xelatex"
+["xdvipdfmx"] 1668973918 "01-RCT.xdv" "01-RCT.pdf" "01-RCT" 1668973919
+  "01-RCT.xdv" 1668973918 2717856 5f19648f6c74b1320ce7c329a7f9851a "xelatex"
   (generated)
   "01-RCT.pdf"
-["xelatex"] 1668971757 "c:/Users/ifyou/Documents/RA Jobs/LAMBDA/Econometrica Aplicada/lectures/01-RCT/01-RCT.tex" "01-RCT.xdv" "01-RCT" 1668971770
-  "01-RCT.aux" 1668971768 15046 e436da5fd0b3d3f8f2a323a27fa4a21f "xelatex"
-  "01-RCT.nav" 1668971768 8479 38ce44b4b06cf21802f8572ec227b383 "xelatex"
-  "01-RCT.out" 1668971768 1890 befd6cadcebb6172df7eb7ec3a45d64b "xelatex"
-  "01-RCT.tex" 1668971756 38332 779942da3a26e6b85a242cc96cf2223c ""
-  "01-RCT.vrb" 1668971768 858 a25e661fc398b2af3896da0660a9b3e1 "xelatex"
-  "c:/Users/ifyou/Documents/RA Jobs/LAMBDA/Econometrica Aplicada/lectures/01-RCT/01-RCT.tex" 1668971756 38332 779942da3a26e6b85a242cc96cf2223c ""
+["xelatex"] 1668973910 "c:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/lectures/01-RCT/01-RCT.tex" "01-RCT.xdv" "01-RCT" 1668973919
+  "01-RCT.aux" 1668973918 15216 c5130a8dd0b77cdd215bdd96b8d833d0 "xelatex"
+  "01-RCT.nav" 1668973918 8571 0e49b58d970945aec80baae5f6ed727f "xelatex"
+  "01-RCT.out" 1668973918 1890 bbf5ddc8d7db3359209c196e93df63ab "xelatex"
+  "01-RCT.tex" 1668973905 39246 b6780887f4fe782a3f341c460927f367 ""
+  "01-RCT.vrb" 1668973917 858 a25e661fc398b2af3896da0660a9b3e1 "xelatex"
+  "c:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/lectures/01-RCT/01-RCT.tex" 1668973905 39246 b6780887f4fe782a3f341c460927f367 ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1666419996 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1666425602 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1666417270 1004 54797486969f23fa377b128694d548df ""
@@ -228,6 +228,9 @@
   "c:/texlive/2022/texmf-dist/tex/latex/csquotes/csquotes.def" 1666418865 21994 2bc2a882df92d97dbce35c06bb1d3541 ""
   "c:/texlive/2022/texmf-dist/tex/latex/csquotes/csquotes.sty" 1666418865 62761 3c92d495a9e03d7254b9a3266aa17164 ""
   "c:/texlive/2022/texmf-dist/tex/latex/etoolbox/etoolbox.sty" 1666419633 46845 3b58f70c6e861a13d927bff09d35ecbc ""
+  "c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty" 1666419979 2757 ee97743276dc242c78f33fd622e260ea ""
+  "c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-generic.tex" 1666419979 33234 40b369fd6c8364bdcc88401c4c1db5bf ""
+  "c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-xeluatex.tex" 1666419979 45782 7166bfdff927bad3f81e302543d76c90 ""
   "c:/texlive/2022/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty" 1666420012 162076 2f6d31c4632f2730c57b9c0fda038e15 ""
   "c:/texlive/2022/texmf-dist/tex/latex/fontspec/fontspec.cfg" 1666420012 549 c4adac819276241fea8eb79c5ab7b99e ""
   "c:/texlive/2022/texmf-dist/tex/latex/fontspec/fontspec.sty" 1666420012 1656 7e824878bad4df5a3e8bba4e463d9126 ""
@@ -294,8 +297,8 @@
   "c:/texlive/2022/texmf-dist/web2c/texmf.cnf" 1666417071 40171 cdab547de63d26590bebb3baff566530 ""
   "c:/texlive/2022/texmf-var/web2c/xetex/xelatex.fmt" 1666425781 5570016 ae84beb1782fad512f67eae33b13a4f4 ""
   "c:/texlive/2022/texmf.cnf" 1666425655 713 e69b156964470283e0530f5060668171 ""
-  "fig//dime.png" 1593659055 31659 ddb985e7835d046a6ee445d610d4a0f1 ""
-  "fig//fig1.pdf" 1520433868 125651 cedc80360758afa40f2e991ab2bc9cc8 ""
+  "fig/dime.png" 1593659055 31659 ddb985e7835d046a6ee445d610d4a0f1 ""
+  "fig/fig1.pdf" 1520433868 125651 cedc80360758afa40f2e991ab2bc9cc8 ""
   (generated)
   "01-RCT.aux"
   "01-RCT.log"

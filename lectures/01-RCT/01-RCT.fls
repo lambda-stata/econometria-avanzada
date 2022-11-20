@@ -1,8 +1,8 @@
-PWD c:/Users/ifyou/Documents/RA Jobs/LAMBDA/Econometrica Aplicada/lectures/01-RCT
+PWD c:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/lectures/01-RCT
 INPUT c:/texlive/2022/texmf.cnf
 INPUT c:/texlive/2022/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2022/texmf-var/web2c/xetex/xelatex.fmt
-INPUT c:/Users/ifyou/Documents/RA Jobs/LAMBDA/Econometrica Aplicada/lectures/01-RCT/01-RCT.tex
+INPUT c:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/lectures/01-RCT/01-RCT.tex
 OUTPUT 01-RCT.log
 INPUT c:/texlive/2022/texmf-dist/tex/latex/beamer/beamer.cls
 INPUT c:/texlive/2022/texmf-dist/tex/latex/beamer/beamer.cls
@@ -1646,6 +1646,28 @@ INPUT c:/texlive/2022/texmf-dist/tex/latex/caption/caption-beamer.sto
 INPUT c:/texlive/2022/texmf-dist/tex/latex/caption/caption-beamer.sto
 INPUT c:/texlive/2022/texmf-dist/tex/latex/caption/caption-beamer.sto
 INPUT c:/texlive/2022/texmf-dist/tex/latex/caption/caption-beamer.sto
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesome.sty
+INPUT c:/texlive/2022/texmf-dist/tex/generic/iftex/ifxetex.sty
+INPUT c:/texlive/2022/texmf-dist/tex/generic/iftex/ifluatex.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-generic.tex
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-generic.tex
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-generic.tex
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-generic.tex
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontspec/fontspec.sty
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-xeluatex.tex
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-xeluatex.tex
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-xeluatex.tex
+INPUT c:/texlive/2022/texmf-dist/tex/latex/fontawesome/fontawesomesymbols-xeluatex.tex
 INPUT c:/texlive/2022/texmf-dist/tex/latex/beamertheme-metropolis/pgfplotsthemetol.sty
 INPUT c:/texlive/2022/texmf-dist/tex/latex/beamertheme-metropolis/pgfplotsthemetol.sty
 INPUT c:/texlive/2022/texmf-dist/tex/latex/beamertheme-metropolis/pgfplotsthemetol.sty
@@ -1704,8 +1726,9 @@ INPUT c:/texlive/2022/texmf-dist/tex/latex/graphics/graphicx.sty
 INPUT ./01-RCT.nav
 INPUT 01-RCT.nav
 INPUT 01-RCT.nav
-INPUT ./fig//dime.png
-INPUT ./fig//dime.png
+INPUT ./fig/dime.png
+INPUT ./fig/dime.png
+INPUT fig/dime.png
 OUTPUT 01-RCT.xdv
 INPUT c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT c:/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
@@ -1752,8 +1775,9 @@ INPUT ./01-RCT.vrb
 INPUT 01-RCT.vrb
 INPUT ./01-RCT.vrb
 INPUT 01-RCT.vrb
-INPUT ./fig//fig1.pdf
-INPUT ./fig//fig1.pdf
+INPUT ./fig/fig1.pdf
+INPUT ./fig/fig1.pdf
+INPUT fig/fig1.pdf
 OUTPUT 01-RCT.nav
 OUTPUT 01-RCT.toc
 OUTPUT 01-RCT.snm
