@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Diseño de Regresión Discontínua (RDD)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Rony Rodriguez-Ramirez" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x7da97c6e3b44fbdb7f0a608faa6ef3d","expires":14}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="libs/remark-css/default.css" type="text/css" />
+    <link rel="stylesheet" href="libs/remark-css/metropolis.css" type="text/css" />
+    <link rel="stylesheet" href="libs/remark-css/metropolis-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="libs/remark-css/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Diseño de Regresión Discontínua (RDD)
+## Econometría Avanzada
+### Rony Rodriguez-Ramirez
+### DIME |The World Bank <br> 05 September 2021
+
+---
+
+
+
+
+
+
+# Table of contents
+
+1. [Intro](#intro)
+2. [Randomización local](#randlocal)
+3. [Detalles del RDD](#detalles)
+4. [Implementación en la práctica](#imple)
+5. [Ejemplos generales](#ejemplos)
+6. [Fuzzy RDD](#fuzzy)
+7. [Ejemplos de Fuzzy RDD](#ejemplosrdd)
+8. [Conclusiones](#conclusiones)
+
+---
+
+class: inverse, center, middle
+name: intro
+
+# RDD Introducción
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# RDD Introducción
+
+* Introducido por primera vez para estudiar el impacto del reconocimiento de méritos por Thistlethwaite y Campbell (1960)
+* Sin embargo, solo comenzó a llamar la atención en la economía desde fines de la década de 1990.
+* Al igual que los ECA, el RDD consiste en comparar 2 variables de resultado: la variable de resultado de los individuos que fueron tratados y la variable de resultado de los individuos que no fueron tratados.
+* El RDD se considera una estrategia de evaluación que proporciona resultados tan convincentes como las estimaciones de experimentos aleatorios, sabiendo que los experimentos aleatorios se consideran ampliamente como el estándar de oro de la evaluación de impacto.
+
+---
+
+# Regla de tratamiento
+
+* El tratamiento de la población depende de si una variable observada `\(X\)`, supera un valor crítico `\(c\)`.
+* La variable `\(X\)` es llamada variable de asignación (assignment variable or forcing variable).
+* La regla de tratamiento viene dada por:
+
+`$$\left\{\begin{array}{ll}D = 0, 	&amp; \text{if}~X &lt; c \\ D = 1,  &amp; \text{if}~X \geq c \end{array} \right.$$`
+donde `\(D=0\)` significa que la población no es tratada y `\(D=1\)` significa que la población es tratada. 
+* A esto se le llamaa como sharp RDD. 
+
+---
+
+# RDD Introducción
+
+* Pero, ¿qué es una discontinuidad?
+  * Una ruptura brusca en los valores de una función.
+  * Matemáticamente, estamos hablando de una ecuación por partes.
+  
+
+`$$f(x) = \left\{\begin{array}{ll}\frac{1}{2} x, 	&amp; \quad x &lt; 5 \\ 2+\frac{1}{2}x,  &amp; \quad x \geq 5 \end{array} \right.$$`
+---
+
+# Uso del RDD
+
+* No tenemos un RCT y nos preocupan las variables endógenas.
+* RDD utiliza la asignación de discontinuidad exógena para estimar los efectos causales, es decir, las observaciones de un lado de la ruptura terminan siendo muy similares a las del otro lado.
+* Básicamente, terminamos con grupos equilibrados, pero no tenemos una asignación de tratamiento aleatoria.
+
+---
+
+class: inverse, center, middle
+name: randlocal
+
+# Randomización local
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+
+---
+
+# RD como randomización local
+
+* Aleatorización local (de Angrist y Pischke)
+* El estado del tratamiento es una función determinista de una variable `\(a\)`, de modo que una vez que conocemos `\(X\)`, sabemos `\(D_x\)`.
+* El estado del tratamiento es una función discontinua de `\(a\)`, porque no importa qué tan cerca esté `\(X\)` del límite, `\(D_x\)` permanece sin cambios hasta que se alcanza el límite.
+
+
+`$$D_x = \begin{cases} 1 &amp;\text{if}~X \geq \text{cutoff} \\  0 &amp;\text{if}~X &lt; \text{cutoff} \end{cases}$$`
+		
+---
+
+# RD como randomización local
+
+* A la variable de asignación X la llamamos *variable de forzamiento* o *variable de ejecución*.
+* La variable de asignación (o forzamiento) no es ortogonal a:
+  * ya sea a las características observadas de los individuos (socioeconómico, estado de sus padres, etc.). 
+  * ni a las características no observadas de los individuos (coeficiente intelectual, preferencia, etc.).
+
+---
+
+# RD como randomización local
+
+&lt;img src="img/fig2.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, center, middle
+name: detalles
+
+# RD detalles
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Un setup lineal 
+
+Supongamos la siguiente ecuación:
+* La ecuación (1) incluye la variable ficticia de tratamiento, ya que lo utilizaremos como un control lineal para nuestra variable de ejecución.
+
+`$$y = \alpha + D\tau + x\beta + \varepsilon.$$`
+
+--
+
+* ¿Controlaremos otras variables?
+
+--
+
+* Aunque el tratamiento no se asigna al azar, sabemos de dónde proviene.
+
+---
+
+# Un setup lineal
+
+* Para medir el impacto causal del premio al mérito, el RDD consiste en calcular, para el mismo individuo, el `\(y\)` que obtendría con y sin el tratamiento.
+* Para hacerlo, el RDD se centra en las personas que obtienen una puntuación `\(c\)` y las siguientes razones:
+  * `\(B'\)` (que está relacionado con una puntuación `\(c'\)` ubicada justo encima de `\(c\)`) sería una suposición razonable del valor de y del individuo que puntúa `\(c\)` en caso de que reciba el tratamiento;
+  * `\(A''\)` (que está relacionado con una puntuación `\(c''\)` ubicada justo debajo de `\(c\)`) sería una estimación razonable del valor de y del individuo que puntúa `\(c\)` en el caso contrafactual en el que no recibe el tratamiento.
+* Como consecuencia, el RDD considera `\(\tau = B' - A''\)` como el impacto causal de los premios al mérito en los logros académicos.
+
+---
+
+# RD detalles
+
+&lt;img src="img/fig3.png" width="35%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# RD detalles
+
+Se deben cumplir dos condiciones para considerar `\(\tau\)`  como el impacto causal:
+
+* **Primero**: El tratamiento de la población debe depender de si una variable observada excede un valor crítico denotado `\(c\)`.
+* **Segundo**: Los individuos no tienen un control preciso sobre la variable de asignación (o forzamiento).
+
+---
+
+# RD detalles: Explicación intuitiva
+
+* "Sin control preciso" significa que entre los que puntúan cerca del umbral, es una cuestión de "suerte" en qué lado del umbral aterrizan.
+* Los que fracasan marginalmente y los que pasan marginalmente son idénticos.
+* Suponemos, sin embargo, que todos los individuos son incapaces de controlar con precisión el puntaje justo alrededor del umbral.
+
+---
+
+# Formulación de un diseño RD
+
+* Consideremos la formulación sencilla de un diseño RD: 
+
+`$$\begin{align}y &amp;= D\tau + W\delta_1 + U \\ D &amp;= 1[X \geq c] \\ X &amp;= W\delta_2 + V.\end{align}$$`
+
+  Donde `\(W\)` es el vector de todas las características predeterminadas y observables del individuo que podrían afectar el resultado y/o la variable de asignación `\(X\)`.
+
+* La heterogeneidad individual en el resultado se describe completamente por el par de variables aleatorias no observables `\((W, U)\)`.
+
+---
+
+# Formulación de un diseño RD
+
+* Este modelo parece una configuración de variable ficticia endógena estándar, excepto que observamos la variable de asignación, `\(X\)`.
+* Esto nos permite relajar la mayoría de los demás supuestos que se suelen hacer en este tipo de modelo:
+  * Primero, permitimos que `\(W\)` se determine de forma endógena siempre que se determine antes que `\(V\)`.
+  * En segundo lugar, no tomamos ninguna postura sobre si algunos elementos de `\(\delta_1\)` o `\(\delta_2\)` son cero (restricciones de exclusión para IV).
+  * En tercer lugar, no hacemos suposiciones sobre las correlaciones entre `\(W, U y V\)`.
+  
+---
+
+# Sin control preciso
+
+* Si los individuos tienen un control impreciso sobre X, tenemos la sorprendente implicación de que la variación en el estado del tratamiento será aleatoria en una vecindad del umbral. Para ver esto, tenga en cuenta que según la regla de Bayes, tenemos:
+
+`$$\begin{align}P_r[W=w, U&amp;=u | X = x] \\ &amp;= f(x|W=w, U=u)\frac{Pr[W=W, U=u]}{f(x)}\end{align}$$`
+
+donde `\(f(.)\)` y `\(f(.|.)\)` son densidades marginal y conditional de `\(X\)`. 
+* Por lo tanto, cuando `\(f(.|.)\)` es contínuo en `\(x\)`, la distribución `\(Q\)` y `\(U\)` condicional en `\(X\)` será contínua en `\(x\)`. 
+
+---
+
+# Sin control preciso
+
+* Es importante enfatizar que, incluso en el caso de un "control impreciso", el individuo aún puede tener cierto control sobre `\(X\)`: a través de sus esfuerzos, puede optar por cambiar la distribución hacia la derecha.
+* La densidad para alguien con `\(W = w, U = u\)`, pero bien puede ser diferente, con una media, varianza o forma de densidad diferente, para otros individuos, con diferentes niveles de capacidad, que toman diferentes decisiones.
+* Suponemos, sin embargo, que todos los individuos son incapaces de controlar con precisión la puntuación justo alrededor del umbral. 
+
+---
+
+# Énfasis: randomización local
+
+* Si los individuos tienen un control impreciso sobre X como se definió anteriormente, el tratamiento es "tan bueno como" asignado al azar alrededor del punto de corte, en otras palabras, tenemos "Aleatorización local".
+* En otras palabras, la suposición conductual de que los individuos no manipulan X con precisión alrededor del umbral tiene la predicción de que el tratamiento es aleatorio localmente.
+* La brecha de discontinuidad en el punto de corte identifica por tanto el efecto de tratamiento de interés.
+* El diseño de RD es un primo mucho más cercano de los experimentos aleatorios que otros métodos de la competencia (como el emparejamiento en métodos observables y IV).
+
+
+---
+
+# RCTs y RDDs
+
+&lt;img src="img/rctrdd.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# RD detalles
+
+* Podemos tener la siguiente especificación de nuestro RDD:
+
+`\begin{equation}
+y = \alpha + D\tau + x\beta_1 + x^2 \beta_2 +\varepsilon,
+\end{equation}`
+
+* donde `\(x\beta_1 + x^2 \beta_2\)` es una función cuadrática de nuestra variable de ejecucción.
+
+* ¿Por qué cree que podríamos querer estimar esta ecuación?
+
+---
+
+# RD detalles
+
+* También podríamos tener la siguiente especificación: 
+
+`\begin{equation}
+y = \alpha + D\tau + (x - x_0)\beta_1 + [(x - x_0)D]\beta_2 +\varepsilon,
+\end{equation}`
+
+* Hemos reemplazado `\(x\)` con `\(x - x_0\)` de la ecuación (1) y agregamos un término de interacción `\((x - x_0)D\)`. Es decir, centrando la variable de ejecucción restando el punto de corte.
+
+
+---
+class: inverse, center, middle
+name: imple
+
+# Implementación en la práctica
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+---
+
+# Implementación en la práctica
+
+Tres puntos importantes:
+
+1. Representación gráfica
+2. Estimación de la regresión a partir de modelos lineales y no lineales.
+3. Una "lista de verificación" recomendada para la implementación.
+
+---
+# Representación gráfica
+
+* Una gran ventaja del diseño de RD sobre los métodos de la competencia es su transparencia, que se puede ilustrar mediante métodos gráficos.
+
+* Una forma estándar de graficar los datos es dividir la variable de asignación en varios contenedores, asegurándose de que haya dos contenedores separados a cada lado del punto de corte.
+
+* Luego, el valor promedio de la variable de resultado se puede calcular para cada contenedor y graficar contra los puntos medios de los contenedores.
+
+---
+# Representación gráfica
+
+* Para algún ancho de banda `\(h\)`, y para cierto número de contenedores `\(K_0\)` y `\(K_1\)` a la izquierda y derecha del valor de corte, respectivamente, la idea es construir contenedores `\(b_k, b_{k+1}\)`, para `\(k = 1, 2, ..., K_0 + K+1\)` dónde: 
+
+`$$b_k = c - (k_0-k+1)h$$`
+
+
+* El valor promedio de la variable a estimar en el contenedor (bin) es: 
+
+
+`$$\bar{y} = \frac{1}{N_k} \sum_{i=1}^{N} y_i 1[b_k &lt; X_i \leq b_{k+1}]$$`
+
+* El número de observaciones en cada contenedor es: 
+
+`$$N_k = \sum_{i = 1}^{N}1[b_k &lt; X_i \leq b_{k+1}]$$`
+
+---
+
+# Representación gráfica
+
+* Hay varias ventajas importantes al graficar los datos de esta manera antes de comenzar a ejecutar regresiones:
+  1. El gráfico proporciona una forma sencilla de visualizar cuál es la forma funcional de la función de regresión.
+
+  2. La comparación de los resultados medios a la izquierda y a la derecha del punto de corte proporciona una indicación de la magnitud del efecto del tratamiento.
+
+  3. El gráfico también muestra si hay saltos comparables inesperados en otros puntos.
+  
+* Tenga en cuenta que el impacto visual del gráfico generalmente se mejora al trazar también un modelo de regresión relativamente flexible, como un modelo polinomial.
+
+---
+
+# Estimando la regresión
+
+* Intuitivamente, habrá dos pasos para estimar el efecto del tratamiento.
+
+* Primero, estimar dos regresiones separadas a cada lado del punto de corte.
+
+* En segundo lugar, calcular la diferencia entre el valor predicho de `\(y\)` en `\(X = c\)` de la regresión a la derecha del punto de corte, y la `\(y\)` en `\(X = c\)` de la regresión a la izquierda del punto de corte.
+
+
+---
+
+# Estimando la regreión
+
+* Los modelos de regresión a la izquierda y a la derecha del punto de corte son:
+
+`$$\begin{align}y &amp;= \alpha_l + f_l(X -c) + \varepsilon, \\ y &amp;= \alpha_r + f_r(X-c) + \varepsilon \end{align}$$`
+donde `\(f_l(.)\)` y `\(f_r(.)\)` son forma funcionales.
+
+* Por tanto, el efecto del tratamiento es `\(\tau = \alpha_r - \alpha_l\)`.
+
+---
+
+# Estimando la regresión
+
+* Una forma más directa de estimar el efecto del tratamiento es ejecutar una regresión agrupada en ambos lados del punto de corte: 
+
+`$$y = \alpha_l + \tau D + f(X - c) + \varepsilon,$$`
+
+donde `\(f(X -c) = f_l(X − c) + D[f_r(X − c) − f_l(X − c)]\)` y `\(\tau = \alpha_r - \alpha_l\)`.
+
+* Una ventaja del enfoque combinado es que produce directamente estimaciones y errores estándar del efecto del tratamiento `\(\tau\)`.
+
+---
+
+# El caso lineal
+
+* El caso lineal donde `\(f_l(X - c) = \beta_l (X - c)\)` y `\(f_r(X - c) = \beta_r (X - c)\)`, la regresión agrupada es: 
+
+`\begin{equation}
+y = \alpha_l + \tau D + \beta_l(X - c) + (\beta_r - \beta_l)D(X-c) + \varepsilon.
+\end{equation}`
+
+* Se recomienda dejar que la función de regresión difiera en ambos lados del punto de corte al incluir términos de interacción entre `\(D\)` y `\(X - c\)`. 
+
+---
+
+# Un principio
+
+* Sin embargo, en la práctica, las estimaciones en las que la pendiente de regresión o, más generalmente, la función de regresión `\(f(X - c)\)` a menudo se limitan a ser iguales en ambos lados del punto de corte, a menudo se informan.
+
+* Una posible justificación para hacerlo es que si la forma funcional es de hecho la misma en ambos lados del límite, entonces se obtienen estimaciones más eficientes del efecto del tratamiento al imponer esa restricción.
+
+* Sin embargo, una especificación tan limitada no debe constituir la base central del enfoque empírico, sino que solo debe considerarse como una estimación adicional que debe informarse en aras de la exhaustividad.
+
+---
+
+# Regresiones lineales locales y ancho de banda
+
+- ¿Cómo podemos saber qué forma funcional usar para `\(f_r(X - c)\)` y `\(f_l(X - c)\)`?
+  - Primero, si estimamos las regresiones lineales dentro de una ventana dada de ancho `\(h\)` alrededor del punto de corte, se puede suponer que `\(f_r(X - c)\)` y `\(f_l(X - c)\)` son lineales:
+  
+  $$y = \alpha_l + \tau D + \beta_l(X - c) + (\beta_r - \beta_l)D(X - c) + \varepsilon, $$
+  
+  donde `\(c - h \leq X \leq c + h\)`. 
+  
+  - Esta regresión lineal local es una regresión del núcleo con un núcleo rectangular. Es un tipo de muchas estrategias no paramétricas (locales).
+  
+---
+
+# Notas sobre kernel
+
+* Tenga en cuenta que estimar una regresión lineal estándar (paramétrica) utilizando puntos de datos que están dentro de + = - h del límite es equivalente a estimar una regresión lineal local con ancho de banda hy un núcleo rectangular.
+
+* Un kernel es una función de ponderación que se utiliza en algunas técnicas de estimación no paramétricas y semiparamétricas.
+
+* Estos pesos son distintos de cero dentro de un intervalo dado y cero fuera de él, con un patrón dentro de los intervalos que depende del tipo de kernel utilizado.
+
+* Un núcleo rectangular pondera todas las observaciones en un intervalo igual.
+
+
+---
+# Elección de un ancho de banda
+
+* Tenga en cuenta que elegir un ancho de banda h implica encontrar un óptimo
+equilibrio entre precisión y sesgo.
+
+* Por un lado, el uso de un ancho de banda mayor produce estimaciones más precisas a medida que se dispone de más observaciones para estimar la regresión.
+
+* Por otro lado, es menos probable que la especificación lineal sea precisa si la expectativa condicional subyacente no es lineal, ya que la especificación lineal solo puede proporcionar una aproximación cercana para la expectativa condicional no lineal en un ancho de banda pequeño.
+
+---
+# Elección de un ancho de banda
+
+* Tenga en cuenta que elegir un ancho de banda h implica encontrar un equilibrio óptimo entre precisión y sesgo.
+
+* Por un lado, el uso de un ancho de banda mayor produce estimaciones más precisas a medida que se dispone de más observaciones para estimar la regresión.
+
+* Por otro lado, es menos probable que la especificación lineal sea precisa si la expectativa condicional subyacente no es lineal, ya que la especificación lineal solo puede proporcionar una aproximación cercana para la expectativa condicional no lineal en un ancho de banda pequeño.
+
+---
+
+# Enfoque paramétrico vs no paramétrico 
+
+Una forma de pensar en estos dos enfoques es la siguiente:
+
+  1. El enfoque paramétrico intenta elegir el modelo correcto para ajustarse a un conjunto de datos dado, mientras que el enfoque no paramétrico intenta elegir el conjunto de datos correcto para ajustarse a un modelo dado.
+  
+  2. La sugerencia aquí es no depender de un método o especificación en particular. 
+  
+---
+
+# Prueba de la validez del diseño RD
+
+* Primero, inspeccionando el histograma de la variable de asignación. 
+  * Tenga en cuenta que no podemos probar el supuesto de "control impreciso" directamente, ya que solo observaremos una observación sobre la variable de asignación por individuo en un momento dado.
+
+  * Pero una prueba intuitiva de este supuesto es si la distribución agregada de la variable de asignación es discontinua, ya que una mezcla de densidades continuas a nivel individual es en sí misma una densidad continua.
+  
+---
+
+# Prueba de la validez del diseño RD
+
+* En segundo lugar, examinar si las covariables de referencia observadas están equilibradas "localmente" a ambos lados del umbral.
+  * Es natural realizar un análisis DR gráfico y una estimación formal, reemplazando la variable dependiente con cada una de las covariables de referencia observadas en W.
+  
+  * Una discontinuidad indicaría una violación del supuesto subyacente que predice la asignación aleatoria local.
+  
+---
+
+# Prueba de validez del diseño RD
+
+* En tercer lugar, incorporar covariables en la estimación: si el diseño de RD es válido, el otro uso de las covariables de línea de base es solo para reducir la variabilidad muestral en las estimaciones de RD, pero no tiene ningún impacto en las estimaciones de RD.
+
+  * Un enfoque es simplemente agregar `\(W\)` a la regresión y demostrar que la inclusión de estos regresores no afectará la consistencia del estimador de RD.
+
+  * Otro enfoque es, podemos "residualizar" la variable dependiente, es decir, restar de `\(Y\)` una predicción de `\(Y\)` basada en las covariables de línea de base `\(W\)`, y luego realizar un análisis de RD en los residuos. Si el diseño de RD es válido, este procedimiento proporciona una estimación consistente del mismo parámetro de RD de interés.
+  
+  
+---
+
+# El Checklist recomendado
+
+1. Evaluar la posibilidad de manipulación de la variable de asignación mostrando su distribución.
+2. Presente el gráfico RD principal utilizando promedios locales agrupados.
+3. Grafique una especificación polinomial de referencia.
+4. Explore la sensibilidad de los resultados a un rango de anchos de banda y un rango de órdenes al polinomio.
+5. Lleve a cabo un análisis de RD paralelo en las covariables de la línea de base.
+6. Explore la sensibilidad de los resultados a la inclusión de covariables de referencia
+
+--
+
+.exercise[
+_**Recordemos:**_ 
+La inclusión de covariables de línea de base, sin importar cuán altamente correlacionadas estén con el resultado, no debería afectar la discontinuidad estimada, si se cumple el supuesto de no manipulación.
+]
+
+
+---
+class: inverse, center, middle
+name: ejemplos
+
+# Ejemplos
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+
+---
+
+# Exposición sostenida a la contaminación del aire
+
+Ebenstein, A. et al. (2016):
+
+* Estima el efecto de la exposición sostenida a partículas menores de 10 μm (PM10) en la esperanza de vida.
+* El diseño de la investigación cuasiexperimental se basa en la política del río Huai de China
+* La política se instituyó durante la década de 1950 cuando los recursos económicos se asignaron a través de la planificación central y dictaba que las áreas al norte del río Huai recibían carbón gratuito o altamente subsidiado para calefacción interior.
+  * Construcción de una infraestructura de calefacción centralizada a carbón solo en ciudades al norte del río Huai.
+  * No hay un sistema equivalente en las ciudades del sur.
+  
+
+---
+
+# Exposición sostenida a la contaminación del aire
+
+&lt;img src="img/china.jpg" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Exposición sostenida a la contaminación del aire
+
+&lt;img src="img/china2.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Orígenes legales y VIH femenino
+
+Anderson (2017): 
+
+- Ella demuestra que el origen legal de estos países anteriormente colonizados determina significativamente las tasas actuales de VIH femenino.
+- Centrándose en las diferencias en los derechos de propiedad de las mujeres bajo dos códigos legales.
+  - Derecho consuetudinario vs Derecho civil.
+- Ella estima la siguiente ecuación: 
+
+`$$\begin{align} Y_{rcepi} &amp;= \alpha_0 + \alpha_1 L_{rc} + \alpha_2 X_{rc} + \alpha_3 X_{rcep} \\ &amp;+ \alpha_4 X_{rcepi} + f(BD_{rcep}) + \delta_e + \gamma_r + \lambda_t + \epsilon_{rcepi}, \end{align}$$`
+
+- Nuestras principales variables son: `\(L_rc\)` and `\(f(BD_{rcep})\)`; indicador de derecho consuetudinario y un polinomio de segundo orden de la distancia desde el centroide de cada píxel hasta la frontera nacional más cercana con diferentes orígenes legales.
+
+---
+
+# Orígenes legales y VIH femenino
+
+&lt;img src="img/hiv.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Orígenes legales y VIH femenino
+
+&lt;img src="img/hiv2.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Orígenes legales y VIH femenino
+
+&lt;img src="img/tab1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, center, middle
+name: fuzzy
+
+# Fuzzy RDD
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+
+---
+
+# Fuzzy RDD
+
+* Hemos discutido varios ejemplos donde el umbral determina (perfectamente) el estado del tratamiento (es decir, RD aguda).
+  * Ahora, analicemos Fuzzy RD donde el umbral cambia la probabilidad de tratamiento, pero menos de 100 pp
+  * Recuerde el concepto de cumplimiento. Al igual que en RCT, la asignación de tratamiento no incluye el cumplimiento perfecto.
+
+--
+
+* Por lo tanto, podemos usarlo como un IV (estimaciones de ITT). 
+
+---
+
+# Fuzzy RDD
+
+* Supongamos el siguiente modelo donde `\(D_i\)` denota el tratamiento como antes:
+
+`$$P[\mathrm{D_i} = 1 | x_i] = \begin{cases}
+g_0(x_1), 			&amp; \quad \text{if} x_i \geq x_0 \\
+g_1(x_1),   		&amp; \quad \text{if} x_i &lt; x_0 
+\end{cases},\text{where}~ g_1(x_0) \neq g_0(x_0).$$`
+
+* ¿Cuál sería nuestra principal suposición con respecto a `\(g_1(x_0)\)` and `\(g_0(x_0)\)` ?
+* Pueden ser cualquier cosa siempre que difieran (y cuanto más mejor) en `\(x_0\)`. 
+
+---
+
+# Fuzzy RDD
+
+Fuzzy RD conduce naturalmente a una estrategia de estimación 2SLS simple:
+
+* Supongamos que `\(g_1 (x_0)\)` y `\(g_0 (x_0)\)` pueden describirse mediante polinomios de orden _pth_:
+
+`$$\begin{align}
+		E[\mathrm{D_i}|x_i] &amp;= \gamma_{00} + \gamma_{01}x_1 + \gamma_{02}x_i^2 + \dots + \gamma_{0p}x_i^p  \\
+							&amp;+ [\gamma_{0}^{*} + \gamma_{1}^{*}x_i + \gamma_{2}^{*}x_i^2 + \dots + \gamma_{p}^{*}x_i^p] \mathrm{T_i} \notag \\
+							&amp;= \gamma_{00} + \gamma_{01}x_i + \gamma_{02}x_i^2 + \dots + \gamma_{0p}x_i^p \notag \\
+							&amp;+ \gamma_{0}^{*}\mathrm{T_i}  + \gamma_{1}^{*}x_i\mathrm{T_i} + \gamma_{2}^{*}x_i^2\mathrm{T_i} + \dots + \gamma_{p}^{*}x_i^p\mathrm{T_i} \notag 
+	\end{align}$$`
+
+* La variable dummy `\(T_i\)` indica el punto de discontinuidad en `\(E[\mathrm{D_i}|x_i]\)` donde  `\(\mathrm{T_i} = 1(x_i \geq x_0)\)`.
+
+---
+
+# Fuzzy RDD
+
+El estimador de RD difuso más simple usa solo `\(T_i\)` como un instrumento, sin los términos de interacción (con los términos de interacción en la lista de instrumentos, también nos gustaría dejar las interacciones en la segunda etapa).
+
+* La primera etapa en este caso sería: 
+
+`\begin{equation}
+	\mathrm{D_i} = \gamma_{0} + \gamma_{1}x_i + \gamma_{2}x_i^2 + \dots + \gamma_{p}x_i^p + \pi \mathrm{T_i} + \xi_{1i}, 
+\end{equation}`
+
+* donde `\(T_i\)`, es el instrumento excluido que proporciona poder identificativo con efectos de primera etapa dados por `\(\pi\)`.
+
+---
+
+# Fuzzy RDD
+
+La primera etapa que utiliza los términos de interacciones se puede escribir como:
+
+`$$\begin{align}
+	\mathrm{D_i} 	&amp;= \gamma_{00} + \gamma_{01}\tilde{x}_1 + \gamma_{02}\tilde{x}_i^2 + \dots + \gamma_{0p}\tilde{x}_i^p 	\\
+					&amp;+ \gamma_{0}^{*}\mathrm{T_i}  + \gamma_{1}^{*}\tilde{x}_i\mathrm{T_i} + \gamma_{2}^{*}\tilde{x}_i^2\mathrm{T_i} + \dots + \gamma_{p}^{*}\tilde{x}_i^p\mathrm{T_i} \notag 
+	\end{align}$$`
+
+* ¿Cuáles son los instrumentos excluídos? 
+* `\(\mathrm{T_i}, \tilde{x}_i\mathrm{T_i},  \tilde{x}_i^2\mathrm{T_i}, \dots ,  \tilde{x}_i^p\mathrm{T_i}.\)`
+* ¿Cuál sería nuestra segunda etapa? 
+
+
+---
+
+# Fuzzy RDD
+
+* Una forma más fácil de ver el 2SLS:
+
+`$$\begin{align}
+	y &amp;= \alpha + \tau D + f(X-c) + \varepsilon , \\
+	D &amp;= \alpha + \delta T + g(X - c ) + \epsilon.
+ \end{align}$$`
+ 
+ 
+---
+ 
+# Fuzzy RD: Takeaways
+ 
+* Piense en la RD difusa como la versión IV de la RD aguda.
+* Se aplican todas las lecciones IV, incluidos los requisitos de la restricción de exclusión.
+* Los efectos del tratamiento en ese contexto son tardíos para las personas cercanas al umbral para quienes el umbral induce un cambio en el estado del tratamiento.
+* Verifique los umbrales de placebo.
+
+
+---
+class: inverse, center, middle
+name: ejemplosrdd
+
+# Ejemplos: Fuzzy RDD
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+
+---
+
+# Finanzas familiares
+
+Clemens y Tiongson (2017) utilizan un RDD para estudiar una discontinuidad de políticas en Filipinas que asignó de manera cuasialeatoria la migración familiar parcial y temporal para trabajos con salarios altos en Corea:
+
+* Migración y cambios en el gasto de los hogares.
+* Acuerdo bilateral entre Filipinas y Corea del Sur que permite la participación de trabajadores filipinos en el sistema de permisos de empleo de Corea.
+* Diseño: 
+  * Se requirió la solicitud de trabajos de EPS para aprobar una prueba de idioma coreano (KLT).
+  * Se requirió una puntuación de 120 puntos o más para obtener un permiso de trabajo.
+* Resultados: gastar más en salud y educación, reducir los préstamos y aumentar los ahorros.
+
+---
+
+# Finanzas familiares
+
+&lt;img src="img/skprdd.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Finanzas familiares
+
+&lt;img src="img/skptab.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: inverse, center, middle
+name: conclusiones
+
+# Conclusiones
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#D38C28' size=1px width=1100px&gt;&lt;/html&gt;
+
+
+---
+
+# Conclusiones
+
+* Los diseños de RD pueden ser válidos en el entorno muy general de "selección en inobservables", lo que permite una correlación arbitraria entre `\(U, V y W\)`, pero al mismo tiempo no requiere un IV.
+
+* Todo lo que se necesita es que, condicional en `\(W, U\)`, la densidad de `\(V\)` sea continua, y sigue el resultado de la aleatorización local.
+
+* ¿Cómo un diseño de RD puede lograr esto, dados estos supuestos débiles? La respuesta está en lo absolutamente necesario en un diseño de RD: la observabilidad del índice latente `\(X\)`.
+
+* Con el diseño de RD, el investigador puede evitar adoptar una postura firme sobre qué `\(W\)` incluir en el análisis, ya que el diseño predice que las `\(W\)` son irrelevantes e innecesarias para la identificación.
+
+---
+
+# Conclusiones
+
+* Por lo tanto, puede ser más útil considerar los diseños de RD como una descripción de un _proceso de generación de datos_ en particular, en lugar de un "método" o incluso un "enfoque".
+
+* En prácticamente cualquier contexto con un resultado y, estado de tratamiento `\(D\)` y otras variables observables `\(W\)`, en principio, un investigador puede construir un estimador de control de regresión o IV y afirmar que se satisfacen los supuestos de identificación necesarios.
+
+* Esto no es así con un diseño RD. Si se observa `\(X\)`, entonces no hay más remedio que intentar estimar la expectativa de `\(y\)` condicionada a `\(X\)` a cada lado del límite. Si no es así, entonces el diseño RD simplemente no se aplica. En este sentido, el diseño de RD obliga al investigador a analizarlo de una manera particular, y hay poco margen para la discreción del investigador, al menos desde el punto de vista de la identificación.
+
+---
+class: inverse, center, middle
+
+# ¡Muchas gracias!
+
+---
+exclude: true
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

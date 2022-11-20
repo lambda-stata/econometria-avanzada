@@ -1,0 +1,18 @@
+\frametitle{Randomización en Stata (From DIME Analytics)}
+
+  \begin{lstlisting}[basicstyle=\tiny]
+    * Set the environment to make randomization replicable
+    version 12.0  [SETS VERSION]
+    isid unique_id, sort  [SORTS UNIQUE ID]
+    set seed 12345  [SETS THE RANDOM SEED FOR REPLICATION]
+
+    * Assign random numbers to the observations and rank them from the smallest to the largest
+    gen random_number = uniform()  [GENERATES A RANDOM NUMBER BETWEEN 0 AND 1]
+    egen ordering = rank(random_number) [ORDERS EACH OBSERVATION FROM SMALLEST TO LARGEST]
+
+    * Assign observations to control & treatment group based on their ranks
+    gen group = .
+    replace group = 1 if ordering <= N/2 [ASSIGNS TREATMENT STATUS TO FIRST HALF OF SAMPLE]
+    replace group = 0 if ordering > N/2  [ASSIGNS CONTROL STATUS TO SECOND HALF OF SAMPLE]
+  \end{lstlisting}
+
