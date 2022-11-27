@@ -98,7 +98,7 @@ name: intro
 
 $$\left\{\begin{array}{ll}D = 0, 	& \text{if}~X < c \\ D = 1,  & \text{if}~X \geq c \end{array} \right.$$
 donde $D=0$ significa que la población no es tratada y $D=1$ significa que la población es tratada. 
-* A esto se le llamaa como sharp RDD. 
+* A esto se le llama sharp RDD. 
 
 ---
 
@@ -187,8 +187,8 @@ $$y = \alpha + D\tau + x\beta + \varepsilon.$$
 
 * Para medir el impacto causal del premio al mérito, el RDD consiste en calcular, para el mismo individuo, el $y$ que obtendría con y sin el tratamiento.
 * Para hacerlo, el RDD se centra en las personas que obtienen una puntuación $c$ y las siguientes razones:
-  * $B'$ (que está relacionado con una puntuación $c'$ ubicada justo encima de $c$) sería una suposición razonable del valor de y del individuo que puntúa $c$ en caso de que reciba el tratamiento;
-  * $A''$ (que está relacionado con una puntuación $c''$ ubicada justo debajo de $c$) sería una estimación razonable del valor de y del individuo que puntúa $c$ en el caso contrafactual en el que no recibe el tratamiento.
+  * $B'$ (que está relacionado con una puntuación $c'$ ubicada justo encima de $c$) sería una suposición razonable del valor de $y$ del individuo que puntúa $c$ en caso de que reciba el tratamiento;
+  * $A''$ (que está relacionado con una puntuación $c''$ ubicada justo debajo de $c$) sería una estimación razonable del valor de $y$ del individuo que puntúa $c$ en el caso contrafactual en el que no recibe el tratamiento.
 * Como consecuencia, el RDD considera $\tau = B' - A''$ como el impacto causal de los premios al mérito en los logros académicos.
 
 ---
@@ -236,7 +236,7 @@ $$\begin{align}y &= D\tau + W\delta_1 + U \\ D &= 1[X \geq c] \\ X &= W\delta_2 
 * Esto nos permite relajar la mayoría de los demás supuestos que se suelen hacer en este tipo de modelo:
   * Primero, permitimos que $W$ se determine de forma endógena siempre que se determine antes que $V$.
   * En segundo lugar, no tomamos ninguna postura sobre si algunos elementos de $\delta_1$ o $\delta_2$ son cero (restricciones de exclusión para IV).
-  * En tercer lugar, no hacemos suposiciones sobre las correlaciones entre $W, U y V$.
+  * En tercer lugar, no hacemos suposiciones sobre las correlaciones entre $W, U$ y $V$.
   
 ---
 
@@ -532,7 +532,7 @@ name: ejemplos
 
 # Exposición sostenida a la contaminación del aire
 
-Ebenstein, A. et al. (2016):
+Ebenstein, A. et al. (2017):
 
 * Estima el efecto de la exposición sostenida a partículas menores de 10 μm (PM10) en la esperanza de vida.
 * El diseño de la investigación cuasiexperimental se basa en la política del río Huai de China
