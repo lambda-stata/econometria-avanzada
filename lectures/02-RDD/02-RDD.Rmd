@@ -2,7 +2,7 @@
 title: "Diseño de Regresión Discontínua (RDD)"
 subtitle: "Econometría Avanzada"
 author: "Rony Rodriguez-Ramirez "
-date: "DIME |The World Bank <br> `r format(Sys.time(), '%d %B %Y')`"
+date: "DECRG |The World Bank <br> `r format(Sys.time(), '%d %B %Y')`"
 output:
   xaringan::moon_reader:
     css: ["libs/remark-css/default.css", 
@@ -53,10 +53,8 @@ htmltools::tagList(
 
 ```{r, echo = F, eval=T, include=FALSE}
 # File paths
-
   if (Sys.getenv("rrmaximiliano") %in% c("wb501238", "WB501238")) {
-    projectFolder  <- "D:/Documents/RA Jobs/LAMBDA/Econometrica Aplicada"
-    
+    projectFolder  <- "C:/Users/ifyou/Documents/RA Jobs/LAMBDA/econometria-avanzada/"
   }
 
 ```
